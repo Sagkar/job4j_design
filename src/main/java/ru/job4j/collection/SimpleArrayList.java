@@ -20,7 +20,6 @@ public class SimpleArrayList<T> implements SimpleList<T> {
             increase();
         }
         container[size++] = value;
-        iterator().next();
         modCount++;
     }
 
@@ -74,7 +73,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
             }
         };
     }
-    public void increase() {
+    private void increase() {
         container = Arrays.copyOf(container, (container.length + 1) * 2);
     }
 }
