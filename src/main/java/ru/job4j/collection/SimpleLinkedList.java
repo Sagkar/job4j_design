@@ -4,34 +4,24 @@ import java.util.*;
 
 public class SimpleLinkedList<E> implements LinkedList<E> {
 
-    private E[] container;
+    Node<E> head = new Node<E>(null, null);
 
     private int size = 0;
 
     private int modCount = 0;
 
-    private Node<E> previous;
-
     private Node<E> next;
-
-    public SimpleLinkedList() {
-        this.container = (E[]) new Object[0];
-    }
 
     @Override
     public void add(E value) {
-        if (size == container.length) {
-            increase();
-        }
-        Node<E> prev = next;
-        Node<E> node = new Node<E>(prev, value, next);
+        Node<E> temp = next;
+        Node<E> node = new Node<E>(value, next);
         next = node;
-        if (prev == null) {
-            previous = node;
+        if (temp == null) {
+            head = next;
         } else {
-            prev.nextEl = node;
+            temp.nextEl = node;
         }
-        container[size] = (E) node;
         size++;
         modCount++;
     }
@@ -39,19 +29,20 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
     @Override
     public E get(int index) {
         Objects.checkIndex(index, size);
-        final Node<E> l = (Node<E>) container[index];
-        return l.item;
+        Node<E> rsl = head;
+        for (int i = 0; i < index; i++) {
+            rsl = rsl.nextEl;
+        }
+        return rsl.item;
     }
 
     private static class Node<E> {
         E item;
         Node<E> nextEl;
-        Node<E> prevEl;
 
-        Node(Node<E> prev, E element, Node<E> next) {
+        Node(E element, Node<E> next) {
             this.item = element;
             this.nextEl = next;
-            this.prevEl = prev;
         }
 
         @Override
@@ -59,7 +50,6 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
             return "Node{"
                     + "item=" + item
                     + ", nextEl=" + nextEl
-                    + ", prevEl=" + prevEl
                     + '}';
         }
     }
@@ -69,7 +59,7 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
         return new Iterator<E>() {
             int expectedModCount = modCount;
             int elNum = 0;
-            Node<E> itNode = previous;
+            Node<E> itNode = head;
             @Override
             public boolean hasNext() {
                 if (expectedModCount != modCount) {
@@ -89,9 +79,5 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
                 return currentEl;
             }
         };
-    }
-
-    private void increase() {
-        container = Arrays.copyOf(container, (container.length + 1) * 2);
     }
 }
