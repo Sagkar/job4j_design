@@ -74,24 +74,9 @@ public class ForwardLinked<T> implements Iterable<T> {
         };
     }
 
-    @Override
-    public String toString() {
-        return "ForwardLinked{" +
-                "head=" + head +
-                '}';
-    }
-
     private static class Node<T> {
         T value;
         Node<T> next;
-
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "value=" + value +
-                    ", next=" + next +
-                    '}';
-        }
 
         public Node(T value, Node<T> next) {
             this.value = value;
