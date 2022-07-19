@@ -36,9 +36,9 @@ public class ForwardLinkedTest {
         linked.add(2);
         linked.add(3);
         linked.add(4);
-        assertThat(linked, is(contains(1,2,3,4)));
+        assertThat(linked, is(contains(1, 2, 3, 4)));
         assertTrue(linked.revert());
-        assertThat(linked, is(contains(4,3,2,1)));
+        assertThat(linked, is(contains(4, 3, 2, 1)));
     }
 
     @Test(expected = NoSuchElementException.class)
