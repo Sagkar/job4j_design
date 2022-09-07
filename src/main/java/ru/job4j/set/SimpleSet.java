@@ -25,7 +25,6 @@ public class SimpleSet<T> implements Set<T> {
         while (iterator().hasNext()) {
             if (Objects.equals(value, iterator().next())) {
                 rsl = true;
-                break;
             }
             break;
         }
